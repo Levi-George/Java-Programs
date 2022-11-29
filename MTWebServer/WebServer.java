@@ -74,10 +74,10 @@ final class HttpRequest implements Runnable
 		String requestLine = B_R.readLine();
 
 		//Debug code
-		/* 
+		
 		System.out.println();
 		System.out.println(requestLine);
-		*/
+		
 
 		String headerLine = null;
 		while((headerLine = B_R.readLine()).length() != 0)
@@ -95,10 +95,8 @@ final class HttpRequest implements Runnable
 		//formatting for current directory
 		fileName = "." + fileName;
 
-		/*Debugging code 
 		System.out.println("FILE NAME: " + fileName);
 		System.out.println("Working Directory = " + System.getProperty("user.dir"));
-		*/
 
 		//Open the requested file.
 		FileInputStream F_I_S = null;
