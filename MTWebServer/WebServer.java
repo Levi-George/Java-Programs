@@ -1,6 +1,8 @@
 import java.io.* ;
 import java.net.* ;
 import java.util.* ;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public final class WebServer
 {
@@ -76,6 +78,7 @@ final class HttpRequest implements Runnable
 		//Debug code
 		
 		System.out.println();
+		System.out.println("\n\nNEW REQUEST\nTime of Request" + java.time.LocalTime.now());
 		System.out.println(requestLine);
 		
 
