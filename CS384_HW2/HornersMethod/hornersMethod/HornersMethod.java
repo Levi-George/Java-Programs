@@ -67,7 +67,7 @@ public class HornersMethod {
 		
 		for(int i = 0; i < Coeff_List.size(); i++)
 		{
-			System.out.println("" + Coeff_List.get(i) + "x^" + i);
+			System.out.println("" + Coeff_List.get(i) + "x^" + (Coeff_List.size() - i));
 		}
 		
 		
