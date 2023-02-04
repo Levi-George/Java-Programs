@@ -27,6 +27,8 @@ public class HornersMethod {
 														
 		int i = 0;
 		
+		int lastOrder = 0;
+		int i = 0;
 		
 		//parse out our values into the DS
 		
@@ -40,15 +42,19 @@ public class HornersMethod {
 		//we got it above
 		while(i+1 != args.length)
 		{
-			int lastOrder = 0;
-			coefficients.addLast(Integer.parseInt(args[i]));
+			
+			float coeffToAdd = Float.parseFloat(args[i]);
+			
 			
 			//if there is a gap that is greater than 1 space between orders then
 			//we want to add a zero into the coefficient list (makes it easier on me to calculate)
-			if(lastOrder > (Integer.parseInt(args[i+1])+1) )
+			if((lastOrder - (Float.parseFloat(args[i+1]))) > 1 )
 			{
-				coefficients.addLast(0);
+				
+				coefficients.addLast((float)0.0);
 			}
+			
+			coefficients.addLast(coeffToAdd);
 			
 			//set last order as the current order
 			lastOrder = Integer.parseInt(args[i+1]); //get the power of the coefficient
