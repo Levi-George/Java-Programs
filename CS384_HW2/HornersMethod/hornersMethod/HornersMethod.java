@@ -2,15 +2,21 @@ package hornersMethod;
 import java.io.*;
 import java.util.LinkedList;
 import java.lang.String;
+import java.math.*;
+
+//P(x) = (x-x_0)Q(x) + b0
+		//b0 = P(x_0)
+		//Q(x) = P'(x)
+		//b_k = a_k + b_(k+1)*x_0
+		//Q(x_0) = P'(x_0)
 
 public class HornersMethod {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+	
+		//linked list - based on each X, it will have our node address, coefficient and power
+		LinkedList<Float> coefficients = new LinkedList<Float>();
 		
-		LinkedList<Integer> coefficients = new LinkedList<Integer>();
-		
-		System.out.println(args);
 
 		if(args.length == 0 )
 		{
@@ -23,23 +29,12 @@ public class HornersMethod {
 			return;
 		}
 		
-		int x_0 = Integer.parseInt(args[args.length - 1]); //get last string and convert it to int 
-														
-		int i = 0;
+		float x_0 = Float.parseFloat(args[args.length - 1]); //get last string and convert it to int 
 		
 		int lastOrder = 0;
 		int i = 0;
 		
 		//parse out our values into the DS
-		
-		//linked list - based on each X, it will have our node address, coefficient and power
-		
-		//P(x) = (x-x_0)Q(x) + b0
-		//Q(x) = P'(x)
-		//b_k = a_k + b_(k+1)*x_0
-		
-		//store each value in a position based on its power, with x_0 being excluded
-		//we got it above
 		while(i+1 != args.length)
 		{
 			
