@@ -58,12 +58,21 @@ public class HornersMethod {
 			i += 2;
 		}
 		
+		//get our true value
+		float f_x_0 = calculate_x_0(coefficients, x_0);
 		
-		printCoeff_LL(coefficients);
+		//Horner's Calculations
+		//
+		
+		
+		
+		//DEBUG CODE
+		//printCoeff_LL(coefficients);
+		//System.out.println(x_0);
 		
 	}
 	
-	static void printCoeff_LL(LinkedList<Integer> Coeff_List)
+	static void printCoeff_LL(LinkedList<Float> Coeff_List)
 	{
 		
 		for(int i = 0; i < Coeff_List.size(); i++)
@@ -72,6 +81,41 @@ public class HornersMethod {
 		}
 		
 		
+	}
+	
+	static void calculate_QofX(LinkedList<Float> Coeff_List, float x_0)
+	{
+		
+	}
+	
+	static float calculate_x_0(LinkedList<Float> Coeff_List, float x_0)
+	{
+		float sum = 0;
+		int size = Coeff_List.size();
+		for(int i = 0; i < size; i++)
+		{
+			sum += Math.pow(x_0, size) * Coeff_List.get(i);
+		}
+		
+		return sum;
+	}
+	
+	static void HornersMethod(LinkedList<Float> Coeff_List, float x_0)
+	{
+		int n = Coeff_List.size();
+		float y = 0;//P(x_0)
+		float z = 0;//P'(x_0)
+		
+		y = 0; //a_n
+		z = 0; //a_n
+		
+		for(int j = 0; j < n; j++)
+		{
+			y = 0; //x_0 * y + a_j
+			z = 0; //x_0 * z + y
+		}
+		
+		y = 0; //x_0 * y + a_0
 	}
 
 }
