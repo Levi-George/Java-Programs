@@ -13,26 +13,22 @@ import java.math.*;
 public class HornersMethod {
 
 	public static void main(String[] args) {
-	
-		//linked list - based on each X, it will have our node address, coefficient and power
-		LinkedList<Float> coefficients = new LinkedList<Float>();
 		
 		inputValidation(args);//validate user input
 		
+		//linked list - based on each X, it will have our node address, coefficient and power
+		LinkedList<Float> P_of_x = new LinkedList<Float>();
 		float x_0 = Float.parseFloat(args[args.length - 1]); //get last string and convert it to int 
-		
 		int lastOrder = 0;
 		int i = 0;
 		
 		//parse out our values into the DS
-		while(i+1 != args.length)
+		while(i+1 != args.length)//check next space of nothing, so we don't OOB
 		{
-			
+			//get the coefficient
 			float coeffToAdd = Float.parseFloat(args[i]);
 			
-			
-			//if there is a gap that is greater than 1 space between orders then
-			//we want to add a zero into the coefficient list (makes it easier on me to calculate)
+			//add zero to coeff list when a gap between powers exists (i.e. x^4 + x^2)
 			if((lastOrder - (Float.parseFloat(args[i+1]))) > 1 )
 			{
 				
@@ -51,21 +47,18 @@ public class HornersMethod {
 		//get our true value
 		float f_x_0 = calculate_x_0(coefficients, x_0);
 		
-		//Horner's Calculations
-		//
 		//calculate Q_of_x
 		LinkedList<Float> Q_of_x = calculate_QofX(P_of_x, x_0);
 		float p_x_0 = Q_of_x.remove(Q_of_x.size()); //get remainder from last position
 		
 		
 		
-		//DEBUG CODE
-		//printCoeff_LL(coefficients);
-		//System.out.println(x_0);
 		
 	}
 	
 	static void printCoeff_LL(LinkedList<Float> Coeff_List)
+	//***************	END OF MAIN - START OF FUNCS
+	
 	{
 		
 		for(int i = 0; i < Coeff_List.size(); i++)
