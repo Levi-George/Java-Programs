@@ -53,6 +53,9 @@ public class HornersMethod {
 		
 		//Horner's Calculations
 		//
+		//calculate Q_of_x
+		LinkedList<Float> Q_of_x = calculate_QofX(P_of_x, x_0);
+		float p_x_0 = Q_of_x.remove(Q_of_x.size()); //get remainder from last position
 		
 		
 		
@@ -87,7 +90,25 @@ public class HornersMethod {
 			return;
 		}
 	}
+	
+	static LinkedList<Float> calculate_QofX(LinkedList<Float> f_of_x, float x_0)
+	{
+		LinkedList<Float> Q_of_x = new LinkedList<Float>();
 		
+		//b_k = a_k + b_k+1 * x_0
+		float b_k =0;
+		float b_k1 = 0;
+		
+		for(int i = 0; i < f_of_x.size(); i++)
+		{
+			b_k = f_of_x.get(i) + (b_k1 * x_0);
+			
+			
+			Q_of_x.addLast(b_k);
+		}
+		
+		
+		return Q_of_x;
 	}
 	
 	static float calculate_x_0(LinkedList<Float> Coeff_List, float x_0)
