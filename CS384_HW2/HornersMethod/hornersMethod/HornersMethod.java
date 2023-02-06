@@ -53,8 +53,23 @@ public class HornersMethod {
 		LinkedList<Float> Q_of_x = calculate_QofX(P_of_x, x_0);
 		float p_x_0 = Q_of_x.remove(Q_of_x.size()); //get remainder from last position
 		
+		System.out.print("\t" + "P of X from Horner's Method: " + p_x_0);
 		
 		
+		float q_of_x0 = input_x_0(Q_of_x, x_0);
+		float error = 10;
+		float x_next = x_0 - (p_x_0_true/q_of_x0);
+		
+		error = p_x_0_true - x_next;
+		
+		while(error > Math.pow(10, -4))
+		{
+			float P_x_n = input_x_0(P_of_x, x_next);
+			float Q_x_n = input_x_0(Q_of_x, x_next);
+			x_next = x_next - P_x_n/Q_x_n;
+			
+			error = p_x_0_true - x_next;
+		}
 		
 	}
 	
