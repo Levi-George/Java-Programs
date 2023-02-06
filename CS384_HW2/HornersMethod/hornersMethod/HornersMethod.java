@@ -32,10 +32,11 @@ public class HornersMethod {
 			if((lastOrder - (Float.parseFloat(args[i+1]))) > 1 )
 			{
 				
-				coefficients.addLast((float)0.0);
+				P_of_x.addLast((float)0.0);
 			}
 			
-			coefficients.addLast(coeffToAdd);
+			//add the actual coeff
+			P_of_x.addLast(coeffToAdd);
 			
 			//set last order as the current order
 			lastOrder = Integer.parseInt(args[i+1]); //get the power of the coefficient
@@ -44,8 +45,9 @@ public class HornersMethod {
 			i += 2;
 		}
 		
-		//get our true value
-		float f_x_0 = calculate_x_0(coefficients, x_0);
+		float p_x_0_true = input_x_0(P_of_x, x_0);
+		
+		System.out.print("P of X from calculations: " + p_x_0_true);
 		
 		//calculate Q_of_x
 		LinkedList<Float> Q_of_x = calculate_QofX(P_of_x, x_0);
@@ -56,20 +58,19 @@ public class HornersMethod {
 		
 	}
 	
-	static void printCoeff_LL(LinkedList<Float> Coeff_List)
 	//***************	END OF MAIN - START OF FUNCS
 	
+	static void printCoeff_LL(LinkedList<Float> f_of_x)
 	{
 		
-		for(int i = 0; i < Coeff_List.size(); i++)
+		for(int i = 0; i < f_of_x.size(); i++)
 		{
-			System.out.println("" + Coeff_List.get(i) + "x^" + (Coeff_List.size() - i));
+			System.out.println("" + f_of_x.get(i) + "x^" + (f_of_x.size() - i));
 		}
 		
 		
 	}
 	
-	static void calculate_QofX(LinkedList<Float> Coeff_List, float x_0)
 	static void inputValidation(String[] args)
 	{
 		if(args.length == 0 )
@@ -104,13 +105,13 @@ public class HornersMethod {
 		return Q_of_x;
 	}
 	
-	static float calculate_x_0(LinkedList<Float> Coeff_List, float x_0)
+	static float input_x_0(LinkedList<Float> f_of_x, float x_0)
 	{
 		float sum = 0;
-		int size = Coeff_List.size();
+		int size = f_of_x.size();
 		for(int i = 0; i < size; i++)
 		{
-			sum += Math.pow(x_0, size) * Coeff_List.get(i);
+			sum += Math.pow(x_0, size) * f_of_x.get(i);
 		}
 		
 		return sum;
