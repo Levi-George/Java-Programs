@@ -132,22 +132,21 @@ public class HornersMethod {
 		return sum;
 	}
 	
-	static void HornersMethod(LinkedList<Float> Coeff_List, float x_0)
+	static void TrueHorners(LinkedList<Float> F_of_x, LinkedList<Float> f_of_x, float x_0)
 	{
-		int n = Coeff_List.size();
-		float y = 0;//P(x_0)
-		float z = 0;//P'(x_0)
+		float y = F_of_x.get(F_of_x.size()-1);
+		float z = f_of_x.get(f_of_x.size()-1);
 		
-		y = 0; //a_n
-		z = 0; //a_n
-		
-		for(int j = 0; j < n; j++)
+		for(int i = F_of_x.size()-2; i > 0; i-- )
 		{
-			y = 0; //x_0 * y + a_j
-			z = 0; //x_0 * z + y
+			y = x_0 * y + F_of_x.get(i);
+			z = x_0 * z + y;
+			
 		}
 		
-		y = 0; //x_0 * y + a_0
+		y = x_0 * y + F_of_x.get(0);
+		
+		System.out.println("y = " + y + "; z = " + z);
 	}
 
 }
