@@ -17,17 +17,7 @@ public class HornersMethod {
 		//linked list - based on each X, it will have our node address, coefficient and power
 		LinkedList<Float> coefficients = new LinkedList<Float>();
 		
-
-		if(args.length == 0 )
-		{
-			System.out.println("Please enter a valid number of inputs");
-			return;
-		}
-		else if((args.length % 2) != 1)
-		{
-			System.out.println("Invalid number of arguments, it will be odd.");
-			return;
-		}
+		inputValidation(args);//validate user input
 		
 		float x_0 = Float.parseFloat(args[args.length - 1]); //get last string and convert it to int 
 		
@@ -84,7 +74,19 @@ public class HornersMethod {
 	}
 	
 	static void calculate_QofX(LinkedList<Float> Coeff_List, float x_0)
+	static void inputValidation(String[] args)
 	{
+		if(args.length == 0 )
+		{
+			System.out.println("Please enter a valid number of inputs");
+			return;
+		}
+		else if((args.length % 2) != 1)
+		{
+			System.out.println("Invalid number of arguments, it will be odd.");
+			return;
+		}
+	}
 		
 	}
 	
