@@ -22,6 +22,7 @@ public class HornersMethod {
 		int lastOrder = 0;
 		int i = 0;
 		
+		//TODO add code for larger gaps between each term
 		//parse out our values into the DS
 		while(i+1 != args.length)//check next space of nothing, so we don't OOB
 		{
