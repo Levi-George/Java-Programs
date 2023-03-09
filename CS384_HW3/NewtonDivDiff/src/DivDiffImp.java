@@ -99,19 +99,20 @@ public class DivDiffImp {
 		
 		
 	}
-	static void polynomial(ArrayList<Float> x, ArrayList<Float> y)
+	static void coefficients(ArrayList<Float> x, ArrayList<Float> y)
 	{
 		int rounds = x.size();
 		thing.add(y); //first row
 		ArrayList<Float> temp = new ArrayList<Float>();
 		
-		for(int i = 0; i < 5; i++)
+		for(int j = 0; j < rounds; j++)
 		{
-			for(int j = 0; j < 5; j++)
+			for(int i = 0; i < y.size()-1; i++)
 			{
 				
 			}
 		}
+		
 	}
 	
 }
