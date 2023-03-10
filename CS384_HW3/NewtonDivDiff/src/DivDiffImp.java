@@ -117,6 +117,15 @@ public class DivDiffImp {
 		
 		
 	}
+	
+	static void transfer()
+	{
+		for(int i = 0; i < thing.size(); i++)
+		{
+			polynomial.add(thing.get(i).get(0));
+		}
+	}
+	
 	static void coefficients(ArrayList<Float> x, ArrayList<Float> y)
 	{
 		int rounds = x.size();
@@ -131,6 +140,7 @@ public class DivDiffImp {
 				divDiff = divDiff / (x.get((i+1)+j) - x.get(i));
 				temp.add(divDiff);
 			}
+			thing.add(temp);
 			
 		}
 		
