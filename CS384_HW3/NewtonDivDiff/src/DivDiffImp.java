@@ -19,22 +19,40 @@ public class DivDiffImp {
 		int points;
 		ArrayList<Float> x = new ArrayList<Float>();
 		ArrayList<Float> y = new ArrayList<Float>();
+		
+		Scanner readData = null;
+		File dataFile = null;
 
 		try
 		{
-			File dataFile = new File("data.txt");
-			Scanner readData = new Scanner(dataFile);
+			dataFile = new File("data.txt");
+			readData = new Scanner(dataFile);
 		}
 		catch (FileNotFoundException e)
 		{
 			System.out.println("data.txt not found");
 		}
 		
-		//while we can get stuff from the file
-			//get line
-			//split line by space delimiter
+		//get number of points
+		if(readData.hasNextLine())
+		{
+			String data = readData.nextLine();
+			points = Integer.parseInt(data);
+		}
+		
+		//get points
+		while(readData.hasNextLine())
+		{
+			String data = readData.nextLine();
+			x.add(Float.parseFloat(data.split(" ")[0]));
+			y.add(Float.parseFloat(data.split(" ")[1]));
+		}
+		
 		
 		int choice = 0;
+		
+		coefficients(x,y);
+		
 		choice = menu();
 		
 		switch(choice)
@@ -85,7 +103,7 @@ public class DivDiffImp {
 		return choice;
 	}
 	
-	static void approximator(ArrayList<Float> x, ArrayList<Float> y)
+	static void approximator(ArrayList<Float> x, ArrayList<Float> y, Float input)
 	{
 		
 		
@@ -107,10 +125,13 @@ public class DivDiffImp {
 		
 		for(int j = 0; j < rounds; j++)
 		{
-			for(int i = 0; i < y.size()-1; i++)
+			for(int i = 0; i < thing.get(j).size()-1; i++)
 			{
-				
+				float divDiff = thing.get(j).get(i+1) - thing.get(j).get(i);
+				divDiff = divDiff / (x.get((i+1)+j) - x.get(i));
+				temp.add(divDiff);
 			}
+			
 		}
 		
 	}
