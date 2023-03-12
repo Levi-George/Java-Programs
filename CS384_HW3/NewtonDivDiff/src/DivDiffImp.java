@@ -8,21 +8,25 @@ import java.util.ArrayList;
 
 public class DivDiffImp {
 	
-	public static ArrayList<ArrayList<Float> > thing = new ArrayList<ArrayList<Float> >();
+	//Global data structures for polynomial used for approximating and 
+	//storing divided difference values
+	public static ArrayList<ArrayList<Float> > DividedDiffValues = new ArrayList<ArrayList<Float> >();
 	public static ArrayList<Float> polynomial = new ArrayList<Float>();
-
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		//we need something to hold our x and y's
+		//we need someDividedDiffValues to hold our x and y's, 
+		//we also store our total points in the points variable
 		int points;
 		ArrayList<Float> x = new ArrayList<Float>();
 		ArrayList<Float> y = new ArrayList<Float>();
 		
+		//we prepare out reader and file
 		Scanner readData = null;
 		File dataFile = null;
 
+		//we try to open the file and make our scanner
 		try
 		{
 			dataFile = new File("data.txt");
@@ -48,29 +52,49 @@ public class DivDiffImp {
 			y.add(Float.parseFloat(data.split(" ")[1]));
 		}
 		
-		
+		//holds our choice and user input
 		int choice = 0;
+		Float input = 0.0f;
 		
+		//calculate the coefficients of our matrix
 		coefficients(x,y);
 		
+		//display the menu and get our value back
 		choice = menu();
 		
 		switch(choice)
 		{
 		case -1:
-			return;
+			return;//we get this for any errors
 		case 1:
-			calculator(x, y);
+			//call the polynomial "calculator" to construct our polynomial
+			calculator(x);
+			break;
 		case 2:
-			approximator(x, y);
+			//get user input
+			System.out.println("Enter a value to approximate");
+			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+			
+			//try to get user input
+			try
+			{
+				input = Float.parseFloat(reader.readLine());
+			}
+			catch(Exception e)
+			{
+				System.out.println("An error has occurred, closing program");
+			}
+				
+			//call the approximator to approximate the f(x) value for the x given as user input
+			approximator(x, input);
+			break;
 		case 3:
 			return;
 		}
 		
-		
-		
 	}
 	
+	//shows menu and gets user input
 	static int menu()
 	{
 		String readData = "";
@@ -96,54 +120,104 @@ public class DivDiffImp {
 		}
 		
 		if(choice > 3 || choice < 1)
+		{
 			System.out.println("Bad input, quitting program");
+			choice = -1;
+		}
 		
-		choice = -1;
+		
 		
 		return choice;
 	}
 	
-	static void approximator(ArrayList<Float> x, ArrayList<Float> y, Float input)
-	{
+	//approximator will calculate the approximate value of f(x) given any x
+	static void approximator(ArrayList<Float> x, Float input)
+	{	
+		Float sum = 0.0f;
+		Float multiSum = 0.0f;
 		
-		
-		
-		
-	}
-	
-	static void calculator(ArrayList<Float> x, ArrayList<Float> y)
-	{
-		
-		
-		
-	}
-	
-	static void transfer()
-	{
-		for(int i = 0; i < thing.size(); i++)
+		sum += polynomial.get(0);
+		for(int i = 1; i < polynomial.size(); i++)
 		{
-			polynomial.add(thing.get(i).get(0));
-		}
-	}
-	
-	static void coefficients(ArrayList<Float> x, ArrayList<Float> y)
-	{
-		int rounds = x.size();
-		thing.add(y); //first row
-		ArrayList<Float> temp = new ArrayList<Float>();
-		
-		for(int j = 0; j < rounds; j++)
-		{
-			for(int i = 0; i < thing.get(j).size()-1; i++)
+			
+			multiSum = polynomial.get(i);
+			for(int j = 0; j < i; j++)
 			{
-				float divDiff = thing.get(j).get(i+1) - thing.get(j).get(i);
-				divDiff = divDiff / (x.get((i+1)+j) - x.get(i));
-				temp.add(divDiff);
+				multiSum *= (input - x.get(j));
 			}
-			thing.add(temp);
+			
+			sum += multiSum;
+		}
+		
+		System.out.println("Value: " + sum);
+	}
+	
+	//displays the polynomial using the matrix we created to hold the values
+	static void calculator(ArrayList<Float> x)
+	{
+		String polyOutput = "";
+		for(int i = 0; i < polynomial.size(); i++)
+		{
+			
+			polyOutput += polynomial.get(i).toString();
+			
+			if(i != 0)
+			{
+				
+				for(int j = 0; j < i; j++)
+				{
+					polyOutput += "(x-" + x.get(j) + ")";
+				}
+			}
+			if(i != polynomial.size()-1)
+			{
+				polyOutput += " + ";
+			}
+			
+			polyOutput += " ";
 			
 		}
 		
+		System.out.println("\nP(x) = " + polyOutput);
+		
+		
+	}
+	
+	//move key values from matrix into a small data structure
+	static void transfer()
+	{
+		for(int i = 0; i < DividedDiffValues.size(); i++)
+		{
+			polynomial.add(DividedDiffValues.get(i).get(0));
+		}
+	}
+	
+	//generate the coefficients for our polynomial
+	static void coefficients(ArrayList<Float> x, ArrayList<Float> y)
+	{
+		int rounds = x.size();
+		DividedDiffValues.add(y); //first row
+		
+		for(int j = 0; j < rounds-1; j++)
+		{
+			DividedDiffValues.add(new ArrayList<Float>());
+			
+			for(int i = 1; i < DividedDiffValues.get(j).size(); i++)
+			{
+				//create each divided difference
+				float divDiff = DividedDiffValues.get(j).get(i) - DividedDiffValues.get(j).get(i-1);
+				float width = x.get(i+j) - x.get(i-1);
+				divDiff = divDiff / width;
+				
+				//add the divided difference into the matrix
+				DividedDiffValues.get(j+1).add(divDiff);
+				
+			}
+		}
+		
+		
+		
+		transfer();
 	}
 	
 }
