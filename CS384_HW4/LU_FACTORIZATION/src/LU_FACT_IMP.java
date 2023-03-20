@@ -13,6 +13,9 @@ public class LU_FACT_IMP {
 		// TODO Auto-generated method stub
 		
 		ArrayList<ArrayList<Float> > A = new ArrayList<ArrayList<Float> >();
+		ArrayList<ArrayList<Float> > P = new ArrayList<ArrayList<Float> >();
+		ArrayList<ArrayList<Float> > L = new ArrayList<ArrayList<Float> >();
+		ArrayList<ArrayList<Float> > U = new ArrayList<ArrayList<Float> >();
 		
 		int rows, cols = 0;
 		
@@ -50,12 +53,30 @@ public class LU_FACT_IMP {
 			
 		}
 		
+		for(int i = 0; i < cols; i++)
+		{
+			A.add(new ArrayList<Float>());
+		}
+		
 		//get points
 		while(readData.hasNextLine())
 		{
 			String data = readData.nextLine();
-			//start parsing
+			for(int i = 0; i < data.split(" ").length; i++)
+			{
+				float nextElement = Float.parseFloat(data.split(" ")[i]);
+				A.get(i).add(nextElement);
+			}
 		}
+		
+		
+		
+		
+	}
+	
+	public static void GaussianElim(ArrayList<ArrayList<Float> > A, ArrayList<ArrayList<Float> > P, int rows, int cols )
+	{
+		
 	}
 
 }
