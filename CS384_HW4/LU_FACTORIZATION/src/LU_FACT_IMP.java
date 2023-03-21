@@ -76,7 +76,27 @@ public class LU_FACT_IMP {
 	
 	public static void GaussianElim(ArrayList<ArrayList<Float> > A, ArrayList<ArrayList<Float> > P, int rows, int cols )
 	{
+		//find min
+		boolean swap = false;
 		
+		for(int i = 0; i < rows-1; i++)
+		{
+			float min = 0;
+			for(int j = 0; j < rows-1; j++)
+			{
+				//find p (an integer between i and p that is not zero)
+				if(min > A.get(i).get(j))
+				{
+					min = A.get(i).get(j);
+					//when do we flag swap?
+				}
+				
+				
+				
+			}
+			
+			
+		}
 	}
 
 }
