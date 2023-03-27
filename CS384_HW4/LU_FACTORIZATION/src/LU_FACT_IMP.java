@@ -105,6 +105,21 @@ public class LU_FACT_IMP {
 			}
 		}
 	}
+	
+	//swapped is the row that we are checking i, swappee is the row that is the smallest value.
+	public static void swap(ArrayList<ArrayList<Float> > A, int swapped, int swappee)
+	{
+		ArrayList<Float> temp = new ArrayList<Float>();
+		
+		temp = A.get(swapped);
+	
+		A.get(swapped).addAll(swapped, A.get(swappee)); 
+		
+		A.get(swappee).addAll(temp);
+		
+		
+		
+	}
 			{
 				//find p (an integer between i and p that is not zero)
 				if(min > A.get(i).get(j))
