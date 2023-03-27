@@ -78,11 +78,33 @@ public class LU_FACT_IMP {
 	{
 		//find min
 		boolean swap = false;
+		int swapped = 0;
+		int swappee = 0;
 		
+		//for each row
 		for(int i = 0; i < rows-1; i++)
 		{
-			float min = 0;
-			for(int j = 0; j < rows-1; j++)
+			for(int j = 0; j < cols-1; j++)
+			{
+				swapped = i;
+			
+				//we need to find the row with the smallest value for the column we are doing
+				swappee = findMin(A, j, i);
+			
+				//if swappee is not equal to the current row then we need to swap the rows
+				if(swappee != i)
+				{
+					swap(A, swapped, swappee);
+				}
+				
+				//then we need to subtract the rows below the current row.
+				float coefficient = 0.0f;
+				coefficient = A.get(swappee).get(j) / A.get(swapped).get(j);
+				VectorSubtraction(A, coefficient, swapped, swappee, j);
+			
+			}
+		}
+	}
 			{
 				//find p (an integer between i and p that is not zero)
 				if(min > A.get(i).get(j))
