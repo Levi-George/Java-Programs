@@ -120,19 +120,30 @@ public class LU_FACT_IMP {
 		
 		
 	}
+	
+	public static int findMin(ArrayList<ArrayList<Float> > A, int column, int row)
+	{
+		int rowToSwap = row;
+		float min = 0;
+		for(int i = 0; i < A.size(); i++)
+		{
+			min = A.get(i).get(column);
+			
+			// i is arbitrary for this, we can replace it with any value, we just need a column length
+			//but we only need to do one column
+			for(int j = column; j < A.get(i).size(); j++)
 			{
-				//find p (an integer between i and p that is not zero)
 				if(min > A.get(i).get(j))
 				{
 					min = A.get(i).get(j);
-					//when do we flag swap?
+					rowToSwap = i;
 				}
 				
-				
-				
 			}
-			
-			
+		}
+		
+		return rowToSwap;
+	}
 		}
 	}
 
