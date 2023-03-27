@@ -144,6 +144,24 @@ public class LU_FACT_IMP {
 		
 		return rowToSwap;
 	}
+	
+	//subtract each row by the first one for that iteration
+	public static void VectorSubtraction(ArrayList<ArrayList<Float> > A, float coefficient, int row, int nextRow, int col)
+	{
+		ArrayList<Float> temp = new ArrayList<Float>();
+		ArrayList<Float> temp2 = new ArrayList<Float>();
+		
+		temp.addAll(A.get(row));
+		temp2.addAll(A.get(nextRow));
+		
+		for(int i = 0; i < temp.size(); i++)
+		{
+			temp2.set(i, temp2.get(i) - temp.get(i)*coefficient);
+		}
+	
+		A.set(nextRow, temp2);
+		
+	}
 		}
 	}
 
