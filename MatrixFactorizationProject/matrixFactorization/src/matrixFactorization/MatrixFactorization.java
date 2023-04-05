@@ -109,5 +109,25 @@ public class MatrixFactorization {
 			}
 		}
 	}
+	
+	
+	//swapped is the row that we are checking i, swappee is the row that is the smallest value.
+	public static void swap(ArrayList<ArrayList<Float> > A, int swapped, int swappee)
+	{
+		ArrayList<Float> temp = new ArrayList<Float>();
+		
+		temp.addAll(A.get(swapped));
+	
+		A.get(swapped).clear();
+		
+		A.get(swapped).addAll(A.get(swappee));
+		
+		A.get(swappee).clear();
+		
+		A.get(swappee).addAll(temp);
+		
+		
+		
+	}
 	}
 }
