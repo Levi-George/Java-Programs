@@ -186,4 +186,18 @@ public class MatrixFactorization {
 			}
 		}
 	}
+	
+	public static void printMatrix(ArrayList<ArrayList<Float> > P)
+	{
+		for(int i = 0; i < P.size(); i++)
+		{
+			for(int j = 0; j < P.get(i).size(); j++)
+			{
+				System.out.print(P.get(i).get(j) + " ");
+			}
+			
+			System.out.print("\n");
+		}
+	}
+
 }
