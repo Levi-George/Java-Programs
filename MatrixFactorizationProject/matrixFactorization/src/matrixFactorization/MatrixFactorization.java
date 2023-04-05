@@ -171,4 +171,19 @@ public class MatrixFactorization {
 		A.get(nextRow).addAll(temp2);
 		
 	}
+	
+	//populate P matrix
+	public static void setP(ArrayList<ArrayList<Float> > P, int row, int col)
+	{
+		for(int i = 0; i < row; i++)
+		{
+			for(int j = 0; j < col; j++)
+			{
+				if(i == j)
+				{
+					P.get(i).set(j, 1.0f);
+				}
+			}
+		}
+	}
 }
