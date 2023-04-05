@@ -150,4 +150,25 @@ public class MatrixFactorization {
 		
 		return rowToSwap;
 	}
+	
+	//subtract a row (nextRow) by the selected row (row), and the column we are on is used for each 
+	public static void VectorSubtraction(ArrayList<ArrayList<Float> > A, int row, int nextRow, int col)
+	{
+		ArrayList<Float> temp = new ArrayList<Float>();
+		ArrayList<Float> temp2 = new ArrayList<Float>();
+		
+		temp.addAll(A.get(row));
+		temp2.addAll(A.get(nextRow));
+		
+		float coeff = temp2.get(col) / temp.get(col);
+		
+		for(int i = 0; i < temp2.size(); i++)
+		{
+			temp2.set(i, temp2.get(i) - (temp.get(i) * coeff)  );
+		}
+		
+		A.get(nextRow).clear();
+		A.get(nextRow).addAll(temp2);
+		
+	}
 }
