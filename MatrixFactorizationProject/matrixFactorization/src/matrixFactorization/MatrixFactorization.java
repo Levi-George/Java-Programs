@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class MatrixFactorization {
 
 	public static void main(String[] args) {
+	
 		ArrayList<ArrayList<Float> > A = new ArrayList<ArrayList<Float> >();
 		ArrayList<ArrayList<Float> > P = new ArrayList<ArrayList<Float> >();
 		ArrayList<ArrayList<Float> > L = new ArrayList<ArrayList<Float> >();
@@ -77,5 +78,36 @@ public class MatrixFactorization {
 			currRow++;
 			//System.out.print("\n"); //DEBUG CODE
 		}
+	public static void GaussianElim(ArrayList<ArrayList<Float> > A, ArrayList<ArrayList<Float> > P, int rows, int cols )
+	{
+		//find min
+		boolean swap = false;
+		int swapped = 0;
+		int swappee = 0;
+		
+		//for each row
+		for(int i = 0; i < rows-1; i++)
+		{
+			for(int j = i; j < cols-1; j++)
+			{
+				swapped = i;
+			
+				//we need to find the row with the smallest value for the column we are doing
+				swappee = findMin(A, j, i);
+			
+				//if swappee is not equal to the current row then we need to swap the rows
+				if(swappee != i)
+				{
+					swap(A, swapped, swappee);
+				}
+				
+				//then we need to subtract the rows below the current row.
+				float coefficient = 0.0f;
+				coefficient = A.get(swappee).get(j) / A.get(swapped).get(j);
+				VectorSubtraction(A, swapped, swappee, j);
+			
+			}
+		}
+	}
 	}
 }
