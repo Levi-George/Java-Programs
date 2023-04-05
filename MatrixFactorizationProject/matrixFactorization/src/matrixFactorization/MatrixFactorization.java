@@ -78,6 +78,37 @@ public class MatrixFactorization {
 			currRow++;
 			//System.out.print("\n"); //DEBUG CODE
 		}
+		
+		/*//DEBUG CODE
+		System.out.print(A.get(0) + "\n");
+		System.out.print(A.get(1) + "\n");
+		System.out.print(A.get(2) + "\n");
+		System.out.print(A.get(3) + "\n");
+		*/
+		
+		//printMatrix(A);
+		
+		
+		//PARSING COMPLETE - BELOW IS COMPUTATIONS
+		
+		//GaussianElim(A, P, rows, cols);
+		
+		//System.out.print("\n" + findMin(A, 0, 0)+ "\n");
+		
+		//swap(A, 1, 3);
+		
+		VectorSubtraction(A, 0, 1, 0);
+		VectorSubtraction(A, 0, 2, 0);
+		VectorSubtraction(A, 0, 3, 0);
+		VectorSubtraction(A, 1, 2, 1);
+		VectorSubtraction(A, 1, 3, 1);
+		VectorSubtraction(A, 2, 3, 2);
+		//VectorSubtraction(A, 0, 1, 0);
+		
+		printMatrix(A);
+
+	}
+	
 	public static void GaussianElim(ArrayList<ArrayList<Float> > A, ArrayList<ArrayList<Float> > P, int rows, int cols )
 	{
 		//find min
