@@ -128,29 +128,36 @@ public class MatrixFactorization {
 		boolean swap = false;
 		int swapped = 0;
 		int swappee = 0;
+		int j = 0;
 		
 		//for each row
 		for(int i = 0; i < rows-1; i++)
 		{
-			for(int j = i; j < cols-1; j++)
+			
+			swapped = i;
+		
+			//we need to find the row with the smallest value for the column we are doing
+			swappee = findMin(A, i);
+		
+			//if swappee is not equal to the current row then we need to swap the rows
+			if(swappee != swapped && swappee > -1)
 			{
-				swapped = i;
-			
-				//we need to find the row with the smallest value for the column we are doing
-				swappee = findMin(A, j, i);
-			
-				//if swappee is not equal to the current row then we need to swap the rows
-				if(swappee != i)
-				{
-					swap(A, swapped, swappee);
-				}
-				
-				//then we need to subtract the rows below the current row.
-				float coefficient = 0.0f;
-				coefficient = A.get(swappee).get(j) / A.get(swapped).get(j);
-				VectorSubtraction(A, swapped, swappee, j);
-			
+				swap(A, swapped, swappee);
+				swap(P, swapped, swappee);
 			}
+				
+			
+			for(j = i+1; j < cols; j++)
+			{
+				VectorSubtraction(A, i, j);
+				
+				//System.out.print("\n");
+				//printMatrix(A);
+				//System.out.print("\n");
+			}
+			
+			
+			
 		}
 	}
 	
@@ -196,7 +203,7 @@ public class MatrixFactorization {
 	}
 	
 	//subtract a row (nextRow) by the selected row (row), and the column we are on is used for each 
-	public static void VectorSubtraction(ArrayList<ArrayList<Float> > A, int row, int nextRow, int col)
+	public static void VectorSubtraction(ArrayList<ArrayList<Float> > A, int row, int nextRow)
 	{
 		ArrayList<Float> temp = new ArrayList<Float>();
 		ArrayList<Float> temp2 = new ArrayList<Float>();
@@ -204,7 +211,7 @@ public class MatrixFactorization {
 		temp.addAll(A.get(row));
 		temp2.addAll(A.get(nextRow));
 		
-		float coeff = temp2.get(col) / temp.get(col);
+		float coeff = temp2.get(row) / temp.get(row);
 		
 		for(int i = 0; i < temp2.size(); i++)
 		{
