@@ -16,6 +16,8 @@ public class MatrixFactorization {
 		ArrayList<ArrayList<Float> > L = new ArrayList<ArrayList<Float> >();
 		ArrayList<ArrayList<Float> > U = new ArrayList<ArrayList<Float> >();
 		
+		
+		
 		int rows = 0, cols = 0;
 		
 		//we prepare out reader and file
