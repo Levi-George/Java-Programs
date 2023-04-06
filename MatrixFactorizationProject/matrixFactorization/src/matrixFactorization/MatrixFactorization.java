@@ -103,16 +103,22 @@ public class MatrixFactorization {
 		
 		//swap(A, 1, 3);
 		
-		VectorSubtraction(A, 0, 1, 0);
-		VectorSubtraction(A, 0, 2, 0);
-		VectorSubtraction(A, 0, 3, 0);
-		VectorSubtraction(A, 1, 2, 1);
-		VectorSubtraction(A, 1, 3, 1);
-		VectorSubtraction(A, 2, 3, 2);
+		//Debug code
+		//VectorSubtraction(A, 0, 1);
+		//VectorSubtraction(A, 0, 2);
+		//VectorSubtraction(A, 0, 3, 0);
+		//VectorSubtraction(A, 1, 2, 1);
+		//VectorSubtraction(A, 1, 3, 1);
+		//VectorSubtraction(A, 2, 3, 2);
+		
 		//VectorSubtraction(A, 0, 1, 0);
 		
 		printMatrix(A);
 		printMatrix(P);
+		
+		//setP(P, rows, cols);
+		
+		//printMatrix(P);
 
 	}
 	
