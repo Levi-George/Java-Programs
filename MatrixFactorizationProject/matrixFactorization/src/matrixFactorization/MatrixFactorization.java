@@ -181,18 +181,19 @@ public class MatrixFactorization {
 		
 	}
 	
-	public static int findMin(ArrayList<ArrayList<Float> > A, int column, int row)
+	public static int findMin(ArrayList<ArrayList<Float> > A, int column)
 	{
-		int rowToSwap = row;
-		float min = 0;
-		min = A.get(0).get(column);
-		for(int i = 0; i < A.size(); i++)
+		int rowToSwap = -1;
+		float min = Math.abs(A.get(column).get(column));
+
+		for(int i = column; i < A.size(); i++)
 		{
 			//System.out.print(A.get(i).get(column) + " "); //DEBUG CODE
+			float newMin = Math.abs(A.get(i).get(column));
 			
-			if(min > A.get(i).get(column))
+			if(min > newMin && newMin != 0)
 			{
-				min = A.get(i).get(column);
+				min = newMin;
 				rowToSwap = i;
 			}
 				
