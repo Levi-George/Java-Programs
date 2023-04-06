@@ -61,6 +61,7 @@ public class MatrixFactorization {
 		for(int i = 0; i < rows; i++)
 		{
 			A.add(new ArrayList<Float>());
+			P.add(new ArrayList<Float>());
 		}
 		
 		//System.out.print("\nA - Columns " + A.size() + " \n"); //DEBUG CODE
@@ -76,6 +77,7 @@ public class MatrixFactorization {
 				float nextElement = Float.parseFloat(data.split(" ")[i]);
 				//System.out.print(nextElement + " "); //DEBUG CODE
 				A.get(currRow).add(nextElement);
+				P.get(currRow).add(0.0f);
 			}
 			currRow++;
 			//System.out.print("\n"); //DEBUG CODE
@@ -93,7 +95,9 @@ public class MatrixFactorization {
 		
 		//PARSING COMPLETE - BELOW IS COMPUTATIONS
 		
-		//GaussianElim(A, P, rows, cols);
+		setP(P);
+		
+		GaussianElim(A, P, rows, cols);
 		
 		//System.out.print("\n" + findMin(A, 0, 0)+ "\n");
 		
@@ -108,6 +112,7 @@ public class MatrixFactorization {
 		//VectorSubtraction(A, 0, 1, 0);
 		
 		printMatrix(A);
+		printMatrix(P);
 
 	}
 	
@@ -206,11 +211,11 @@ public class MatrixFactorization {
 	}
 	
 	//populate P matrix
-	public static void setP(ArrayList<ArrayList<Float> > P, int row, int col)
+	public static void setP(ArrayList<ArrayList<Float> > P)
 	{
-		for(int i = 0; i < row; i++)
+		for(int i = 0; i < P.size(); i++)
 		{
-			for(int j = 0; j < col; j++)
+			for(int j = 0; j < P.get(i).size(); j++)
 			{
 				if(i == j)
 				{
