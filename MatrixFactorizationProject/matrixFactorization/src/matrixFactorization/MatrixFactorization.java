@@ -94,6 +94,7 @@ public class MatrixFactorization {
 		
 		GaussianElim(A, P, L, rows, cols);
 		
+		printMatrixFinale(P, L, A);
 
 	}
 	
