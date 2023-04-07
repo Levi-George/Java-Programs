@@ -15,6 +15,7 @@ public class MatrixFactorization {
 		ArrayList<ArrayList<Float> > P = new ArrayList<ArrayList<Float> >();
 		ArrayList<ArrayList<Float> > L = new ArrayList<ArrayList<Float> >();
 		ArrayList<ArrayList<Float> > U = new ArrayList<ArrayList<Float> >();
+		ArrayList<ArrayList<Float> > LU = new ArrayList<ArrayList<Float> >();
 		
 		
 		
@@ -62,6 +63,9 @@ public class MatrixFactorization {
 		{
 			A.add(new ArrayList<Float>());
 			P.add(new ArrayList<Float>());
+			U.add(new ArrayList<Float>());
+			L.add(new ArrayList<Float>());
+			LU.add(new ArrayList<Float>());
 		}
 		
 		//System.out.print("\nA - Columns " + A.size() + " \n"); //DEBUG CODE
@@ -78,6 +82,9 @@ public class MatrixFactorization {
 				//System.out.print(nextElement + " "); //DEBUG CODE
 				A.get(currRow).add(nextElement);
 				P.get(currRow).add(0.0f);
+				U.get(currRow).add(0.0f);
+				L.get(currRow).add(0.0f);
+				LU.get(currRow).add(0.0f);
 			}
 			currRow++;
 			//System.out.print("\n"); //DEBUG CODE
@@ -96,6 +103,7 @@ public class MatrixFactorization {
 		//PARSING COMPLETE - BELOW IS COMPUTATIONS
 		
 		setP(P);
+		setP(L);
 		
 		GaussianElim(A, P, rows, cols);
 		
