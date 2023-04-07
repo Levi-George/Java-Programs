@@ -37,7 +37,6 @@ public class MatrixFactorization {
 		}
 		
 		//get number of rows and columns (assume in that order)
-		//System.out.print(readData.hasNextLine());
 		if(readData.hasNextLine())
 		{
 			String data = readData.nextLine();
@@ -47,13 +46,13 @@ public class MatrixFactorization {
 			{
 				rows = Integer.parseInt(data.split(" ")[0]);
 				cols = Integer.parseInt(data.split(" ")[0]);
-				//System.out.print(rows + " /" + cols); //DEBUG CODE
+				
 			}
 			else
 			{
 				rows = Integer.parseInt(data.split(" ")[0]);
 				cols = Integer.parseInt(data.split(" ")[1]);
-				//System.out.print(rows + " -" + cols); //DEBUG CODE
+				
 			}
 			
 			
@@ -68,8 +67,6 @@ public class MatrixFactorization {
 			LU.add(new ArrayList<Float>());
 		}
 		
-		//System.out.print("\nA - Columns " + A.size() + " \n"); //DEBUG CODE
-		
 		int currRow = 0;
 		//get points
 		while(readData.hasNextLine())
@@ -79,7 +76,7 @@ public class MatrixFactorization {
 			for(int i = 0; i < data.split(" ").length; i++)
 			{
 				float nextElement = Float.parseFloat(data.split(" ")[i]);
-				//System.out.print(nextElement + " "); //DEBUG CODE
+				
 				A.get(currRow).add(nextElement);
 				P.get(currRow).add(0.0f);
 				U.get(currRow).add(0.0f);
@@ -87,18 +84,8 @@ public class MatrixFactorization {
 				LU.get(currRow).add(0.0f);
 			}
 			currRow++;
-			//System.out.print("\n"); //DEBUG CODE
+			
 		}
-		
-		/*//DEBUG CODE
-		System.out.print(A.get(0) + "\n");
-		System.out.print(A.get(1) + "\n");
-		System.out.print(A.get(2) + "\n");
-		System.out.print(A.get(3) + "\n");
-		*/
-		
-		//printMatrix(A);
-		
 		
 		//PARSING COMPLETE - BELOW IS COMPUTATIONS
 		
@@ -107,27 +94,6 @@ public class MatrixFactorization {
 		
 		GaussianElim(A, P, L, rows, cols);
 		
-		
-		//System.out.print("\n" + findMin(A, 0, 0)+ "\n");
-		
-		//swap(A, 1, 3);
-		
-		//Debug code
-		//VectorSubtraction(A, 0, 1);
-		//VectorSubtraction(A, 0, 2);
-		//VectorSubtraction(A, 0, 3, 0);
-		//VectorSubtraction(A, 1, 2, 1);
-		//VectorSubtraction(A, 1, 3, 1);
-		//VectorSubtraction(A, 2, 3, 2);
-		
-		//VectorSubtraction(A, 0, 1, 0);
-		
-		printMatrix(A);
-		printMatrix(P);
-		
-		//setP(P, rows, cols);
-		
-		//printMatrix(P);
 
 	}
 	
