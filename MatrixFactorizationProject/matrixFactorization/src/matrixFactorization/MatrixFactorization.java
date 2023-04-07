@@ -212,7 +212,7 @@ public class MatrixFactorization {
 	}
 	
 	//subtract a row (nextRow) by the selected row (row), and the column we are on is used for each 
-	public static void VectorSubtraction(ArrayList<ArrayList<Float> > A, int row, int nextRow)
+	public static float VectorSubtraction(ArrayList<ArrayList<Float> > A, int row, int nextRow)
 	{
 		ArrayList<Float> temp = new ArrayList<Float>();
 		ArrayList<Float> temp2 = new ArrayList<Float>();
@@ -230,6 +230,7 @@ public class MatrixFactorization {
 		A.get(nextRow).clear();
 		A.get(nextRow).addAll(temp2);
 		
+		return coeff;
 	}
 	
 	//populate P matrix
