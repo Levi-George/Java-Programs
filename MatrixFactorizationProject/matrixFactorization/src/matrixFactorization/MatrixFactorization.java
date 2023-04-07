@@ -263,5 +263,34 @@ public class MatrixFactorization {
 			System.out.print("\n");
 		}
 	}
+	
+	public static void printMatrixFinale(ArrayList<ArrayList<Float> > Q, ArrayList<ArrayList<Float> > R, ArrayList<ArrayList<Float> > S)
+	{
+		for(int i = 0; i < Q.size(); i++)
+		{
+			System.out.print("|");
+			for(int j = 0; j < Q.get(i).size(); j++)
+			{
+				System.out.print(Q.get(i).get(j) + " ");
+			}
+			System.out.print("|\t");
+			
+			System.out.print("|");
+			for(int j = 0; j < Q.get(i).size(); j++)
+			{
+				System.out.print(R.get(i).get(j) + " ");
+			}
+			System.out.print("|\t");
+			
+			System.out.print("|");
+			for(int j = 0; j < Q.get(i).size(); j++)
+			{
+				System.out.print(S.get(i).get(j) + " ");
+			}
+			System.out.print("|");
+			
+			System.out.print("\n");
+		}
+	}
 
 }
