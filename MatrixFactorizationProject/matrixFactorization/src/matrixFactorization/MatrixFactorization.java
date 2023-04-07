@@ -11,13 +11,10 @@ public class MatrixFactorization {
 
 	public static void main(String[] args) {
 	
-		ArrayList<ArrayList<Float> > A = new ArrayList<ArrayList<Float> >();
-		ArrayList<ArrayList<Float> > P = new ArrayList<ArrayList<Float> >();
-		ArrayList<ArrayList<Float> > L = new ArrayList<ArrayList<Float> >();
-		ArrayList<ArrayList<Float> > U = new ArrayList<ArrayList<Float> >();
-		ArrayList<ArrayList<Float> > LU = new ArrayList<ArrayList<Float> >();
 		
-		
+		ArrayList<ArrayList<Float> > A = new ArrayList<ArrayList<Float> >();//originally parsed matrix
+		ArrayList<ArrayList<Float> > P = new ArrayList<ArrayList<Float> >();//permutation matrix
+		ArrayList<ArrayList<Float> > L = new ArrayList<ArrayList<Float> >();//Lower-Triangle Matrix
 		
 		int rows = 0, cols = 0;
 		
@@ -42,6 +39,7 @@ public class MatrixFactorization {
 			String data = readData.nextLine();
 			//System.out.print(data);
 			
+			//if only one value, we set rows/cols to same value
 			if(data.length() == 1)
 			{
 				rows = Integer.parseInt(data.split(" ")[0]);
@@ -58,30 +56,33 @@ public class MatrixFactorization {
 			
 		}
 		
+		//populate each matrix with it's rows
 		for(int i = 0; i < rows; i++)
 		{
 			A.add(new ArrayList<Float>());
 			P.add(new ArrayList<Float>());
-			U.add(new ArrayList<Float>());
 			L.add(new ArrayList<Float>());
-			LU.add(new ArrayList<Float>());
 		}
 		
+		//the row we are currently populating
 		int currRow = 0;
-		//get points
+		
+		//get points, populate matrix A
 		while(readData.hasNextLine())
 		{
-			
+			//read data
 			String data = readData.nextLine();
+			
+			//for the length of our split data we will iterate
 			for(int i = 0; i < data.split(" ").length; i++)
 			{
+				//get the float from the string data
 				float nextElement = Float.parseFloat(data.split(" ")[i]);
 				
+				//add the element to the matrices
 				A.get(currRow).add(nextElement);
 				P.get(currRow).add(0.0f);
-				U.get(currRow).add(0.0f);
 				L.get(currRow).add(0.0f);
-				LU.get(currRow).add(0.0f);
 			}
 			currRow++;
 			
@@ -89,49 +90,51 @@ public class MatrixFactorization {
 		
 		//PARSING COMPLETE - BELOW IS COMPUTATIONS
 		
+		//set P and L as identity matrices
 		setP(P);
 		setP(L);
 		
+		//perform gaussian elimination
 		GaussianElim(A, P, L, rows, cols);
 		
+		//grand finale
 		printMatrixFinale(P, L, A);
 
 	}
 	
-	public static void GaussianElim(ArrayList<ArrayList<Float> > A, ArrayList<ArrayList<Float> > P, ArrayList<ArrayList<Float> > L, int rows, int cols )
+	public static void GaussianElim(ArrayList<ArrayList<Float> > Q, ArrayList<ArrayList<Float> > R, ArrayList<ArrayList<Float> > S, int rows, int cols )
 	{
-		//find min
-		boolean swap = false;
-		int swapped = 0;
-		int swappee = 0;
-		int j = 0;
 		
-		//for each row
+		boolean swap = false;//swap rows on true
+		int swapped = 0;//the original row position
+		int swappee = 0;//the row to be swapped
+		
+		//for each row we check if we have the lowest value, then swap
+		//after that we may perform vector subtraction
 		for(int i = 0; i < rows-1; i++)
 		{
-			
+			//the row we are checking is the row we are on
 			swapped = i;
 		
 			//we need to find the row with the smallest value for the column we are doing
-			swappee = findMin(A, i);
+			swappee = findMin(Q, i);
 		
 			//if swappee is not equal to the current row then we need to swap the rows
 			if(swappee != swapped && swappee > -1)
 			{
-				swap(A, swapped, swappee);
-				swap(P, swapped, swappee);
+				swap(Q, swapped, swappee);
+				swap(R, swapped, swappee);
 			}
 				
-			
-			for(j = i+1; j < cols; j++)
+			//for each row beneath the current
+			for(int j = i+1; j < cols; j++)
 			{
-				float coeff = VectorSubtraction(A, i, j);
+				//we subtract the current row from the next row and grab the coefficient
+				float coeff = VectorSubtraction(Q, i, j);
 				
-				L.get(j).set(i, coeff);
+				//add the coefficient to our lower triangle matrix
+				S.get(j).set(i, coeff);
 				
-				//System.out.print("\n");
-				//printMatrix(A);
-				//System.out.print("\n");
 			}
 			
 			
@@ -141,33 +144,31 @@ public class MatrixFactorization {
 	
 	
 	//swapped is the row that we are checking i, swappee is the row that is the smallest value.
-	public static void swap(ArrayList<ArrayList<Float> > A, int swapped, int swappee)
+	public static void swap(ArrayList<ArrayList<Float> > Q, int swapped, int swappee)
 	{
 		ArrayList<Float> temp = new ArrayList<Float>();
 		
-		temp.addAll(A.get(swapped));
+		temp.addAll(Q.get(swapped));
 	
-		A.get(swapped).clear();
+		Q.get(swapped).clear();
 		
-		A.get(swapped).addAll(A.get(swappee));
+		Q.get(swapped).addAll(Q.get(swappee));
 		
-		A.get(swappee).clear();
+		Q.get(swappee).clear();
 		
-		A.get(swappee).addAll(temp);
-		
-		
+		Q.get(swappee).addAll(temp);
 		
 	}
 	
-	public static int findMin(ArrayList<ArrayList<Float> > A, int column)
+	public static int findMin(ArrayList<ArrayList<Float> > Q, int column)
 	{
 		int rowToSwap = -1;
-		float min = Math.abs(A.get(column).get(column));
+		float min = Math.abs(Q.get(column).get(column));
 
-		for(int i = column; i < A.size(); i++)
+		for(int i = column; i < Q.size(); i++)
 		{
-			//System.out.print(A.get(i).get(column) + " "); //DEBUG CODE
-			float newMin = Math.abs(A.get(i).get(column));
+	
+			float newMin = Math.abs(Q.get(i).get(column));
 			
 			if(min > newMin && newMin != 0)
 			{
@@ -182,13 +183,13 @@ public class MatrixFactorization {
 	}
 	
 	//subtract a row (nextRow) by the selected row (row), and the column we are on is used for each 
-	public static float VectorSubtraction(ArrayList<ArrayList<Float> > A, int row, int nextRow)
+	public static float VectorSubtraction(ArrayList<ArrayList<Float> > Q, int row, int nextRow)
 	{
 		ArrayList<Float> temp = new ArrayList<Float>();
 		ArrayList<Float> temp2 = new ArrayList<Float>();
 		
-		temp.addAll(A.get(row));
-		temp2.addAll(A.get(nextRow));
+		temp.addAll(Q.get(row));
+		temp2.addAll(Q.get(nextRow));
 		
 		float coeff = temp2.get(row) / temp.get(row);
 		
@@ -197,34 +198,34 @@ public class MatrixFactorization {
 			temp2.set(i, temp2.get(i) - (temp.get(i) * coeff)  );
 		}
 		
-		A.get(nextRow).clear();
-		A.get(nextRow).addAll(temp2);
+		Q.get(nextRow).clear();
+		Q.get(nextRow).addAll(temp2);
 		
 		return coeff;
 	}
 	
 	//populate P matrix
-	public static void setP(ArrayList<ArrayList<Float> > P)
+	public static void setP(ArrayList<ArrayList<Float> > Q)
 	{
-		for(int i = 0; i < P.size(); i++)
+		for(int i = 0; i < Q.size(); i++)
 		{
-			for(int j = 0; j < P.get(i).size(); j++)
+			for(int j = 0; j < Q.get(i).size(); j++)
 			{
 				if(i == j)
 				{
-					P.get(i).set(j, 1.0f);
+					Q.get(i).set(j, 1.0f);
 				}
 			}
 		}
 	}
 	
-	public static void printMatrix(ArrayList<ArrayList<Float> > P)
+	public static void printMatrix(ArrayList<ArrayList<Float> > Q)
 	{
-		for(int i = 0; i < P.size(); i++)
+		for(int i = 0; i < Q.size(); i++)
 		{
-			for(int j = 0; j < P.get(i).size(); j++)
+			for(int j = 0; j < Q.get(i).size(); j++)
 			{
-				System.out.print(P.get(i).get(j) + " ");
+				System.out.print(Q.get(i).get(j) + " ");
 			}
 			
 			System.out.print("\n");
@@ -295,6 +296,8 @@ public class MatrixFactorization {
 		System.out.print("\n\n");
 	}
 	
+	
+	
 	public static void matrixTranspose(ArrayList<ArrayList<Float> > Q)
 	{
 		float temp = 0;
@@ -306,8 +309,6 @@ public class MatrixFactorization {
 				
 				Q.get(i).set(j, Q.get(j).get(i));
 				Q.get(j).set(i, temp);
-				
-				
 				
 			}
 		}
