@@ -292,5 +292,40 @@ public class MatrixFactorization {
 			System.out.print("\n");
 		}
 	}
+	
+	public static void matrixMultiplication(ArrayList<ArrayList<Float> > Q, ArrayList<ArrayList<Float> > R, ArrayList<ArrayList<Float> > S)
+	{
+		ArrayList<Float> temp = new ArrayList<Float>();
+		
+		
+		System.out.print(Q);
+		System.out.print("\t\t");
+		System.out.print(R);
+		System.out.print("\t\t = \t\t");
+		
+		float AddToS = 0.0f;
+		
+		for(int i = 0; i < Q.size(); i++)//for every row of Q
+		{
+			for(int j = 0; j < Q.get(0).size(); j++)//and for every column of R
+			{
+				for(int k = 0; k < Q.get(0).size(); k++)//Multiple reach row element of Q by each column element of R
+				{
+					temp.add(Q.get(i).get(j) * R.get(j).get(i));
+					
+					
+				}
+				for(int l = 0; l < temp.size(); l++)
+				{
+					AddToS += temp.get(l);
+				}
+				S.get(i).set(j, AddToS);
+			}
+		}
+		
+		
+		System.out.print(S);
+		System.out.print("\n\n");
+	}
 
 }
