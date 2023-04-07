@@ -327,5 +327,23 @@ public class MatrixFactorization {
 		System.out.print(S);
 		System.out.print("\n\n");
 	}
+	
+	public static void matrixTranspose(ArrayList<ArrayList<Float> > Q)
+	{
+		float temp = 0;
+		for(int i = 0; i < Q.size(); i++)
+		{
+			for(int j = Q.get(i).size() - 1; j > 0; j--)
+			{
+				temp = Q.get(i).get(j);
+				
+				Q.get(i).set(j, Q.get(j).get(i));
+				Q.get(j).set(i, temp);
+				
+				
+				
+			}
+		}
+	}
 
 }
