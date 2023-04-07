@@ -105,7 +105,8 @@ public class MatrixFactorization {
 		setP(P);
 		setP(L);
 		
-		GaussianElim(A, P, rows, cols);
+		GaussianElim(A, P, L, rows, cols);
+		
 		
 		//System.out.print("\n" + findMin(A, 0, 0)+ "\n");
 		
@@ -130,7 +131,7 @@ public class MatrixFactorization {
 
 	}
 	
-	public static void GaussianElim(ArrayList<ArrayList<Float> > A, ArrayList<ArrayList<Float> > P, int rows, int cols )
+	public static void GaussianElim(ArrayList<ArrayList<Float> > A, ArrayList<ArrayList<Float> > P, ArrayList<ArrayList<Float> > L, int rows, int cols )
 	{
 		//find min
 		boolean swap = false;
@@ -157,7 +158,9 @@ public class MatrixFactorization {
 			
 			for(j = i+1; j < cols; j++)
 			{
-				VectorSubtraction(A, i, j);
+				float coeff = VectorSubtraction(A, i, j);
+				
+				L.get(j).set(i, coeff);
 				
 				//System.out.print("\n");
 				//printMatrix(A);
