@@ -183,6 +183,9 @@ public class MatrixFactorization {
 	}
 	
 	//subtract a row (nextRow) by the selected row (row), and the column we are on is used for each 
+	//INPUT: a matrix Q which will have next Row subtracted by row
+	//PROCESS: subtract one row, from the next row in a matrix (Q)
+	//OUTPUT: return coefficient used for subtraction
 	public static float VectorSubtraction(ArrayList<ArrayList<Float> > Q, int row, int nextRow)
 	{
 		ArrayList<Float> temp = new ArrayList<Float>();
@@ -205,12 +208,17 @@ public class MatrixFactorization {
 	}
 	
 	//populate P matrix
+	
+	//INPUT: Matrix Q
+	//PROCESS: Add values to make matrix identity matrix
+	//OUTPUT: No value returned
 	public static void setP(ArrayList<ArrayList<Float> > Q)
 	{
 		for(int i = 0; i < Q.size(); i++)
 		{
 			for(int j = 0; j < Q.get(i).size(); j++)
 			{
+				//add 1 to matrix when along diagonal
 				if(i == j)
 				{
 					Q.get(i).set(j, 1.0f);
@@ -219,6 +227,9 @@ public class MatrixFactorization {
 		}
 	}
 	
+	//INPUT: Matrix Q 
+	//PROCESS: Print out each element in a matrix pattern
+	//OUTPUT: No output
 	public static void printMatrix(ArrayList<ArrayList<Float> > Q)
 	{
 		for(int i = 0; i < Q.size(); i++)
@@ -232,10 +243,15 @@ public class MatrixFactorization {
 		}
 	}
 	
+	//INPUT: Q, R, S; all matrices to be printed to console
+	//PROCESS: print out each matrix in order of Q, R, S with extra formatting
+	//OUTPUT: no returned output, prints to console
 	public static void printMatrixFinale(ArrayList<ArrayList<Float> > Q, ArrayList<ArrayList<Float> > R, ArrayList<ArrayList<Float> > S)
 	{
+		//run for number of rows
 		for(int i = 0; i < Q.size(); i++)
 		{
+			//format and print row i of Q
 			System.out.print("|");
 			for(int j = 0; j < Q.get(i).size(); j++)
 			{
@@ -243,6 +259,7 @@ public class MatrixFactorization {
 			}
 			System.out.print("|\t");
 			
+			//format and print row i of R
 			System.out.print("|");
 			for(int j = 0; j < Q.get(i).size(); j++)
 			{
@@ -250,6 +267,8 @@ public class MatrixFactorization {
 			}
 			System.out.print("|\t");
 			
+			
+			//format and print row i of S
 			System.out.print("|");
 			for(int j = 0; j < Q.get(i).size(); j++)
 			{
@@ -261,43 +280,51 @@ public class MatrixFactorization {
 		}
 	}
 	
+	//UNUSED
+	//INPUT: Q, left matrix; R, right matrix, S, matrix which will be written to
+	//PROCESS: simple matrix multiplication
+	//OUTPUT: No value returned, S is manipulated w/o memory management
 	public static void matrixMultiplication(ArrayList<ArrayList<Float> > Q, ArrayList<ArrayList<Float> > R, ArrayList<ArrayList<Float> > S)
 	{
 		ArrayList<Float> temp = new ArrayList<Float>();
 		
-		
+		//display left and right matrices
 		System.out.print(Q);
 		System.out.print("\t\t");
 		System.out.print(R);
 		System.out.print("\t\t = \t\t");
 		
+		//temp var
 		float AddToS = 0.0f;
 		
 		for(int i = 0; i < Q.size(); i++)//for every row of Q
 		{
 			for(int j = 0; j < Q.get(0).size(); j++)//and for every column of R
 			{
-				for(int k = 0; k < Q.get(0).size(); k++)//Multiple reach row element of Q by each column element of R
+				for(int k = 0; k < Q.get(0).size(); k++)//Multiply reach row element of Q by each column element of R
 				{
 					temp.add(Q.get(i).get(j) * R.get(j).get(i));
 					
 					
 				}
-				for(int l = 0; l < temp.size(); l++)
+				
+				for(int l = 0; l < temp.size(); l++)//for each element in temp, add to sum
 				{
 					AddToS += temp.get(l);
 				}
-				S.get(i).set(j, AddToS);
+				S.get(i).set(j, AddToS);//insert sum into new matrix
 			}
 		}
 		
-		
+		//display final output
 		System.out.print(S);
 		System.out.print("\n\n");
 	}
 	
 	
-	
+	//INPUT: Q, matrix to be transposed
+	//PROCESSING: transpose the matrix
+	//OUTPUT: no output return, data is manipulated
 	public static void matrixTranspose(ArrayList<ArrayList<Float> > Q)
 	{
 		float temp = 0;
