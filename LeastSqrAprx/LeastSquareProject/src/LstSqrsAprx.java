@@ -170,3 +170,24 @@ public class LstSqrsAprx {
 		
 		
 	}
+	
+	public static void VectorSubtraction(ArrayList<ArrayList<Float> > Q, int row, int nextRow)
+	{
+		ArrayList<Float> temp = new ArrayList<Float>();
+		ArrayList<Float> temp2 = new ArrayList<Float>();
+		
+		temp.addAll(Q.get(row));
+		temp2.addAll(Q.get(nextRow));
+		
+		float coeff = temp2.get(row) / temp.get(row);
+		
+		for(int i = 0; i < temp2.size(); i++)
+		{
+			temp2.set(i, temp2.get(i) - (temp.get(i) * coeff)  );
+		}
+		
+		Q.get(nextRow).clear();
+		Q.get(nextRow).addAll(temp2);
+		
+		return;
+	}
