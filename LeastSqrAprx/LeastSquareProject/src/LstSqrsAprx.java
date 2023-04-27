@@ -191,3 +191,30 @@ public class LstSqrsAprx {
 		
 		return;
 	}
+	
+	public static float sumPow(ArrayList<Float> x, int pow)
+	{
+		float sumSqr = 0.0f;
+		
+		
+		for(int i = 0; i < x.size(); i++)
+		{
+			sumSqr += Math.pow(x.get(i), pow);
+		}
+		
+		return sumSqr;
+	}
+	
+	public static float sumYnXpow(ArrayList<Float> y, ArrayList<Float> x, int iter)
+	{
+		float multiSum = 0.0f;
+		
+		for(int i = 0; i < x.size(); i++)
+		{
+			multiSum += y.get(i) * (float)Math.pow(x.get(i), iter);
+		}
+		
+		return multiSum;
+	}
+
+}
