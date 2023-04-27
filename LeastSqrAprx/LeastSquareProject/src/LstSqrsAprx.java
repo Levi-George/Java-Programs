@@ -78,3 +78,10 @@ public class LstSqrsAprx {
 		
 		
 	}
+	
+	public static void outputParsed(int deg, int N, ArrayList<Float> y, ArrayList<Float> x )
+	{
+		System.out.println(deg + " " + N);
+		System.out.println(y);
+		System.out.println(x);
+	}
