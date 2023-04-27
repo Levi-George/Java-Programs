@@ -111,3 +111,62 @@ public class LstSqrsAprx {
 		System.out.println("Linear \"Polynomial\": " + a_1 + "x" + " + " + a_0);
 		
 	}
+	
+	//P_n(x) = a_n x^n + ... + a_1 x^1 + a_0
+	public static void PolyAprox(ArrayList<Float> y, ArrayList<Float> x, ArrayList<ArrayList<Float>> normalMatrix, int N, int deg)
+	{
+		ArrayList<Float> xy = new ArrayList<Float>();
+		ArrayList<Float> a = new ArrayList<Float>();
+		//form the matrix based on our x and y
+		
+		
+		
+		for(int i = 0; i < deg+1; i++)
+		{
+			normalMatrix.add(new ArrayList<Float>());
+			
+			//add the primary x^i power rows
+			for(int j = 0; j < deg+1; j++)
+			{
+				normalMatrix.get(i).add(sumPow(x, j+i));
+			}
+			
+			xy.add( sumYnXpow(y, x, i) );
+			
+		}
+		
+		System.out.println(normalMatrix);
+		
+		
+		//perform Gaussian Elimination (didn't we do this in the last homework? That has made this much easier)
+		
+		for(int i = 0; i < normalMatrix.get(0).size()-1; i++)
+		{		
+			//for each row beneath the current
+			for(int j = i+1; j < normalMatrix.size(); j++)
+			{
+				//we subtract the current row from the next row and grab the coefficient
+				VectorSubtraction(normalMatrix, i, j);
+				
+			}
+			
+		}
+		
+		System.out.print(normalMatrix);
+		System.out.print("\n" + xy);
+		//
+		
+		//solve for each a_i
+		for(int i = 0; i < normalMatrix.get(0).size()-1; i++)
+		{		
+			//for each row beneath the current
+			for(int j = 0; j < normalMatrix.size(); j++)
+			{
+				
+				
+			}
+			
+		}
+		
+		
+	}
