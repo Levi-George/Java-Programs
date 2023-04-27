@@ -85,3 +85,29 @@ public class LstSqrsAprx {
 		System.out.println(y);
 		System.out.println(x);
 	}
+	
+	//
+	public static void LineAprox(ArrayList<Float> y, ArrayList<Float> x, ArrayList<Float> linA, int N)
+	{
+		float a_0 = 0.0f;
+		float a_1 = 0.0f;
+		
+		float xSqr = 0.0f;
+		float ySum = 0.0f;
+		float xySum = 0.0f;
+		float xSum = 0.0f;
+		
+		for(int i = 0; i < x.size(); i++)
+		{
+			xSqr += x.get(i) * x.get(i);
+			ySum += y.get(i);
+			xySum += y.get(i) * x.get(i);
+			xSum += x.get(i);
+		}
+		
+		a_0 = ((xSqr * ySum) - (xySum * xSum)) / ((N*xSqr) - xSum);
+		a_1 = ((N * xySum) - (xSum*ySum)) / ((N * xSqr) - (xSum*xSum));
+		
+		System.out.println("Linear \"Polynomial\": " + a_1 + "x" + " + " + a_0);
+		
+	}
