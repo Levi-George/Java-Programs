@@ -72,11 +72,52 @@ public class LstSqrsAprx {
 		
 		//outputParsed(deg, N, y ,x);
 		
-		LineAprox(y, x, linA, N);
-		PolyAprox(y, x, normalMatrix, N, deg);
+		
+		ArrayList<Float> P_x;
+		
+		if( deg < 0)
+			return;
+		
+		if(deg < 2)
+		{
+			P_x = LineAprox(y, x, linA, N);
+		}
+		else
+		{
+			P_x = PolyAprox(y, x, normalMatrix, N, deg);
+		}
+		
+		for(int j = 0; j < P_x.size(); j++)
+		{
+			System.out.print("a" + j + " = " + P_x.get(j) + "\t");
+		}
+		
+		System.out.println("\nError: " + error(y, x, P_x));
+		
+		//System.out.println(P_x);
+	}
+	
+	//E = sum(N, (y - P(x))^2 )
+	public static float error(ArrayList<Float> y, ArrayList<Float> x, ArrayList<Float> a)
+	{
+		float error = 0.0f;
+		
+		for(int i = 0; i < x.size(); i++)
+		{
+			float P_x = 0.0f;
+			
+			for(int j = 0; j < a.size(); j++)
+			{
+				P_x += Math.pow(x.get(i), j) * a.get(j);
+			}
+			
+			float yMinx = y.get(i) - P_x;
+			
+			error += Math.pow(yMinx, 2);
+		}
 		
 		
-		
+		return error;
 	}
 	
 	public static void outputParsed(int deg, int N, ArrayList<Float> y, ArrayList<Float> x )
@@ -87,10 +128,12 @@ public class LstSqrsAprx {
 	}
 	
 	//
-	public static void LineAprox(ArrayList<Float> y, ArrayList<Float> x, ArrayList<Float> linA, int N)
+	public static ArrayList<Float> LineAprox(ArrayList<Float> y, ArrayList<Float> x, ArrayList<Float> linA, int N)
 	{
 		float a_0 = 0.0f;
 		float a_1 = 0.0f;
+		
+		ArrayList<Float> a = new ArrayList<Float>();
 		
 		float xSqr = 0.0f;
 		float ySum = 0.0f;
@@ -105,15 +148,17 @@ public class LstSqrsAprx {
 			xSum += x.get(i);
 		}
 		
-		a_0 = ((xSqr * ySum) - (xySum * xSum)) / ((N*xSqr) - xSum);
-		a_1 = ((N * xySum) - (xSum*ySum)) / ((N * xSqr) - (xSum*xSum));
+		a.add( ((xSqr * ySum)  - (xySum * xSum)) / ((N * xSqr) -  xSum) );
+		a.add(    ((N * xySum) -  (xSum * ySum)) / ((N * xSqr) - (xSum*xSum)) );
 		
 		System.out.println("Linear \"Polynomial\": " + a_1 + "x" + " + " + a_0);
+		
+		return a;
 		
 	}
 	
 	//P_n(x) = a_n x^n + ... + a_1 x^1 + a_0
-	public static void PolyAprox(ArrayList<Float> y, ArrayList<Float> x, ArrayList<ArrayList<Float>> normalMatrix, int N, int deg)
+	public static ArrayList<Float> PolyAprox(ArrayList<Float> y, ArrayList<Float> x, ArrayList<ArrayList<Float>> normalMatrix, int N, int deg)
 	{
 		ArrayList<Float> xy = new ArrayList<Float>();
 		ArrayList<Float> a = new ArrayList<Float>();
@@ -131,17 +176,35 @@ public class LstSqrsAprx {
 				normalMatrix.get(i).add(sumPow(x, j+i));
 			}
 			
-			xy.add( sumYnXpow(y, x, i) );
+			normalMatrix.get(i).add(sumYnXpow(y, x, i));
+			//xy.add(  );
 			
 		}
 		
-		System.out.println(normalMatrix);
+		//System.out.println(normalMatrix);
 		
 		
 		//perform Gaussian Elimination (didn't we do this in the last homework? That has made this much easier)
 		
 		for(int i = 0; i < normalMatrix.get(0).size()-1; i++)
-		{		
+		{	
+			
+			int swapped = 0;//the original row position
+			int swappee = 0;//the row to be swapped
+			
+			//the row we are checking is the row we are on
+			swapped = i;
+		
+			//we need to find the row with the smallest value for the column we are doing
+			swappee = findMin(normalMatrix, i);
+		
+			//if swappee is not equal to the current row then we need to swap the rows
+			if(swappee != swapped && swappee > -1)
+			{
+				swap(normalMatrix, swapped, swappee);
+			}
+			
+			
 			//for each row beneath the current
 			for(int j = i+1; j < normalMatrix.size(); j++)
 			{
@@ -152,22 +215,49 @@ public class LstSqrsAprx {
 			
 		}
 		
-		System.out.print(normalMatrix);
-		System.out.print("\n" + xy);
+		//System.out.println(normalMatrix);
+		//System.out.print("\n" + xy);
 		//
 		
+		int lastIndex = normalMatrix.get(0).size() - 1;
+		
+		//remove a from normal matrix
+		for(int i = 0; i < normalMatrix.get(0).size(); i++)
+		{
+			a.add(normalMatrix.get(i).remove(lastIndex));
+		}
+		
+		
+		//System.out.println(normalMatrix);
+		
 		//solve for each a_i
-		for(int i = 0; i < normalMatrix.get(0).size()-1; i++)
+		for(int i = normalMatrix.get(0).size()-1; i > -1; i--)
 		{		
+			
+			int rowSize = normalMatrix.get(0).size();
+			float solvedA = 0.0f;
+			solvedA = a.get(i);
+			
 			//for each row beneath the current
-			for(int j = 0; j < normalMatrix.size(); j++)
-			{
-				
-				
+			for(int j = normalMatrix.size() - 1; j > -1; j--)
+			{	
+				if(j == i)
+				{
+					solvedA = solvedA / normalMatrix.get(i).get(j);
+				}
+				else
+				{
+					solvedA -= normalMatrix.get(i).get(j) * a.get(j);
+				}
 			}
+			
+			a.set(i, solvedA);
 			
 		}
 		
+		
+		//System.out.print(a);
+		return a;
 		
 	}
 	
@@ -190,6 +280,45 @@ public class LstSqrsAprx {
 		Q.get(nextRow).addAll(temp2);
 		
 		return;
+	}
+	
+	//swapped is the row that we are checking i, swappee is the row that is the smallest value.
+	public static void swap(ArrayList<ArrayList<Float> > Q, int swapped, int swappee)
+	{
+		ArrayList<Float> temp = new ArrayList<Float>();
+		
+		temp.addAll(Q.get(swapped));
+	
+		Q.get(swapped).clear();
+		
+		Q.get(swapped).addAll(Q.get(swappee));
+		
+		Q.get(swappee).clear();
+		
+		Q.get(swappee).addAll(temp);
+		
+	}
+	
+	public static int findMin(ArrayList<ArrayList<Float> > Q, int column)
+	{
+		int rowToSwap = -1;
+		float min = Math.abs(Q.get(column).get(column));
+
+		for(int i = column; i < Q.size(); i++)
+		{
+	
+			float newMin = Math.abs(Q.get(i).get(column));
+			
+			if(min > newMin && newMin != 0)
+			{
+				min = newMin;
+				rowToSwap = i;
+			}
+				
+			
+		}
+		
+		return rowToSwap;
 	}
 	
 	public static float sumPow(ArrayList<Float> x, int pow)
