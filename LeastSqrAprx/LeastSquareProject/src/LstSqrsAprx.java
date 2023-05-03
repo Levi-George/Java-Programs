@@ -1,3 +1,14 @@
+/***
+Author: Levi George
+Date:	04/29/23
+Class:	CS384 - Numerical Analysis
+Assn:	To perform linear and polynomial approximation given
+			a degree for the polynomial/linear function
+			a number of points to approximate with
+			and a set of x values with corresponding y values
+*/
+
+
 
 import java.io.File;
 import java.io.BufferedReader;
@@ -18,7 +29,6 @@ public class LstSqrsAprx {
 		int N = 0;
 		ArrayList<Float> x = new ArrayList<Float>();
 		ArrayList<Float> y = new ArrayList<Float>();
-		ArrayList<Float> polyA = new ArrayList<Float>();
 		ArrayList<Float> linA = new ArrayList<Float>();
 		
 		ArrayList<ArrayList<Float>> normalMatrix = new ArrayList<ArrayList<Float>>();
@@ -38,12 +48,13 @@ public class LstSqrsAprx {
 			System.out.println("data.txt not found");
 		}
 		
-		int i = 0;
+		//parse our data
+		int i = 0;//parsing state variable
 		while(readData.hasNextLine())
 		{
 			String data = readData.nextLine();
 			
-			
+			//get our degree and number of points
 			if(i == 0)
 			{
 				deg = Integer.parseInt(data.split(" ")[0]);
@@ -51,6 +62,7 @@ public class LstSqrsAprx {
 				
 			}
 			
+			//get our x points
 			if(i == 1)
 			{
 				for(int j = 0; j < data.split(" ").length; j++)
@@ -59,6 +71,7 @@ public class LstSqrsAprx {
 				}
 			}
 			
+			//get our f(x) points
 			if(i == 2)
 			{
 				for(int j = 0; j < data.split(" ").length; j++)
@@ -70,28 +83,35 @@ public class LstSqrsAprx {
 			i++;
 		}
 		
+		//debug function
 		//outputParsed(deg, N, y ,x);
 		
-		
+		//our polynomial coefficients
 		ArrayList<Float> P_x;
 		
+		//if our degree is too low, we just quit
 		if( deg < 0)
 			return;
 		
+		//if our degree is less than 2 (a_1 * x + a_0)
+		//we do a linear approximation
 		if(deg < 2)
 		{
 			P_x = LineAprox(y, x, linA, N);
 		}
+		//otherwise we do a polynomial approximation
 		else
 		{
 			P_x = PolyAprox(y, x, normalMatrix, N, deg);
 		}
 		
+		//print the polynomial values as per instructions
 		for(int j = 0; j < P_x.size(); j++)
 		{
 			System.out.print("a" + j + " = " + P_x.get(j) + "\t");
 		}
 		
+		//display the error as per instruction
 		System.out.println("\nError: " + error(y, x, P_x));
 		
 		//System.out.println(P_x);
